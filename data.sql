@@ -5,3 +5,63 @@ INSERT INTO animals (name,date_of_birth,escape_attempts,neutered,weight_kg) VALU
 INSERT INTO animals (name,date_of_birth,escape_attempts,neutered,weight_kg) VALUES ('Pikachu',01/07/2021,1,'false',15.04);
 INSERT INTO animals (name,date_of_birth,escape_attempts,neutered,weight_kg) VALUES ('Devimon',05/12/2017,5,'true',11);
 
+INSERT INTO animals (name,date_of_birth,escape_attempts,neutered,weight_kg) VALUES ('Charmander','2020-02-08',0,'false',-11);
+INSERT INTO animals (name,date_of_birth,escape_attempts,neutered,weight_kg) VALUES ('Plantmon','2021-11-15',2,'true',-5.7);
+INSERT INTO animals (name,date_of_birth,escape_attempts,neutered,weight_kg) VALUES ('Squirtle','1993-04-02',3,'true',-12.13);
+INSERT INTO animals (name,date_of_birth,escape_attempts,neutered,weight_kg) VALUES ('Angemon','2005-06-12',1,'true',-45);
+INSERT INTO animals (name,date_of_birth,escape_attempts,neutered,weight_kg) VALUES ('Boarmon','2005-06-07',7,'true',20.4);
+INSERT INTO animals (name,date_of_birth,escape_attempts,neutered,weight_kg) VALUES ('Blossom','1998-10-13',3,'true',17);
+INSERT INTO animals (name,date_of_birth,escape_attempts,neutered,weight_kg) VALUES ('Ditto','2022-05-14',4,'true',22);
+
+UPDATE animals SET species = 'unspecified';
+
+BEGIN;
+
+UPDATE animals 
+SET species = 'unspecified';
+
+ROLLBACK;
+SELECT * From animals;
+
+BEGIN;
+
+UPDATE animals 
+SET species = 'digimon'
+WHERE name LIKE '%mon'
+;
+--Update column and commit
+UPDATE animals 
+SET species = 'pokemon'
+WHERE species IS NULL
+;
+COMMIT;
+
+SELECT * From animals;
+
+--Delete all rows and rollback
+
+BEGIN;
+DELETE FROM animals;
+ROLLBACK;
+
+--Delete all animals born after Jan 1st, 2022.
+
+BEGIN;
+DELETE FROM animals WHERE date_of_birth>'2022-01-01';
+
+-- 
+
+
+--Delete all animals born after Jan 1st, 2022.
+BEGIN;
+DELETE FROM animals WHERE date_of_birth>'2022-01-01';
+SAVEPOINT rm_young;
+--Update all animals' weight to be their weight multiplied by -1.
+UPDATE animals SET weight_kg = weight_kg * -1;
+--Rollback to the savepoint
+ROLLBACK TO SAVEPOINT rm_young;
+--Update all animals' weights that are negative to be their weight multiplied by -1.
+UPDATE animals SET weight_kg = weight_kg * -1 WHERE weight_kg < 0; 
+--Commit transaction
+COMMIT;
+

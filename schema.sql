@@ -6,7 +6,8 @@ CREATE TABLE animals(
    date_of_birth            date     NOT NULL,
    escape_attempts      INT NOT NULL,	
    neutered        BOOLEAN NOT NULL,
-   weight_kg         REAL
+   weight_kg         REAL,
+   PRIMARY KEY(id)	
 );
 
 ALTER TABLE animals ADD species VARCHAR(250);
@@ -14,8 +15,15 @@ ALTER TABLE animals ADD species VARCHAR(250);
 CREATE TABLE owners(
    id INT GENERATED ALWAYS AS IDENTITY,
    full_name       VARCHAR(250),
-   age  INT
+   age  INT,
+   PRIMARY KEY(id)	
 );
+
+CREATE TABLE species (
+    id INT GENERATED ALWAYS AS IDENTITY,
+    name VARCHAR(250),
+    PRIMARY KEY(id)
+  );
 
 ALTER TABLE animals DROP COLUMN species;
 ALTER TABLE animals ADD COLUMN species_id INT;

@@ -66,3 +66,7 @@ CREATE TABLE visits(
     PRIMARY KEY(id)
   );
 
+ALTER TABLE owners ADD COLUMN email VARCHAR(250);
+
+CREATE INDEX owners_email_asc ON owners(email);
+
